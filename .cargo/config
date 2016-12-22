@@ -1,2 +1,2 @@
 [build]
-target = "thumbv7em-none-eabi.json"
+target = "thumbv7em-none-eabi"
