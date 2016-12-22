@@ -6,6 +6,8 @@ the [1bitsy](http://1bitsy.org).  The actual example used here is one
 adapter from the Zinc examples, but with this infrastructure in place,
 you can create whatever you want.
 
+![1bitsy running bitzn](doc/1bitsy_blink.gif)
+
 ## Pre-requisites
 
 ### Hardware
@@ -34,12 +36,12 @@ The code can be built with xargo.
 $ xargo build
 ```
 
-When xargo builds a libcore for your target (thumb
+When xargo builds a libcore for your target (thumbv7em-none-eabi), it may complain that it can't build libc - that seems to be the way xargo/libcore builds right now. It doesn't seem to break the final firmware.
 
-This will generate a stripped ELF binary of your program, which can be loaded onto the 1bitsy with GDB:
+This will eventually generate an ELF binary of your program, which can be loaded onto the 1bitsy with GDB:
 
 ```
-$ gdb ./target/thumbv7em-none-eabi/release/bitzn
+$ gdb ./target/thumbv7em-none-eabi/debug/bitzn
 GNU gdb (GNU Tools for ARM Embedded Processors) 7.10.1.20160210-cvs
 Copyright (C) 2015 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -54,27 +56,38 @@ Find the GDB manual and other documentation resources online at:
 <http://www.gnu.org/software/gdb/documentation/>.
 For help, type "help".
 Type "apropos word" to search for commands related to "word"...
-Reading symbols from target/thumbv7em-none-eabi/release/bitzn...(no debugging symbols found)...done.
+Reading symbols from target/thumbv7em-none-eabi/debug/bitzn...(no debugging symbols found)...done.
 ```
 
-Now, connect to the bmpm2, and connect it to the 1bitsy:
+Now, connect to the bmpm2, and connect it to the 1bitsy (on my Mac, the bmpm2 shows up as `/dev/cu.usbmodemD5DCDBE1`):
 ```
 (gdb) target extended-remote /dev/cu.usbmodemD5DCDBE1
 Remote debugging using /dev/cu.usbmodemD5DCDBE1
+```
+Enable power to the 1bitsy with `monitor tpwr enable`
+```
 (gdb) monitor tpwr enable
+```
+Have the bmpm find the 1bitsy:
+```
 (gdb) monitor jtag_scan
 Target voltage: 3.2V
 Available Targets:
 No. Att Driver
  1      STM32F4xx
+```
+Have GDB attach to the 1bitsy:
+```
 (gdb) attach 1
 Attaching to program: /Users/nem/projects/arm/bitzn/target/thumbv7em-none-eabi/release/bitzn, Remote target
 0x08000332 in ?? ()
 ```
 
+Now you're debugging the 1bitsy!
+
 ### Flashing the Teensy
 
-Continuing in the GDB session above, you can run the `load` command:
+Continuing in the GDB session above, you can run the `load` command to flash the 1bitsy with whatever file gdb has loaded (in our case, "target/thumbv7em-none-eabi/debug/bitzn"):
 ```
 (gdb) load
 Loading section .vector, size 0x40 lma 0x8000000
@@ -97,6 +110,19 @@ Starting program: /Users/nem/projects/arm/bitzn/target/thumbv7em-none-eabi/relea
 Note: automatically using hardware breakpoints for read-only addresses.
 
 Temporary breakpoint 1, 0x0800004e in main ()
+```
+
+
+You can reset the 1bitsy from GDB with the `start` command:
+```
+(gdb) start
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Temporary breakpoint 1 at 0x800038e
+Starting program: /Users/nem/projects/arm/bitzn/target/thumbv7em-none-eabi/debug/bitzn 
+Note: automatically using hardware breakpoints for read-only addresses.
+
+Temporary breakpoint 1, 0x0800038e in main ()
 ```
 
 ### Running the firmware
