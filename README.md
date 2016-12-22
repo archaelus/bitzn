@@ -25,6 +25,8 @@ You'll need:
   * In your project dir: `$ rustup override set nightly-2016-09-17`
 * [Install xargo](https://github.com/japaric/xargo)
   * `$ cargo install xargo`
+* Install the Rust source so xargo can build libcore
+  * `$ rustup component add --toolchain nightly-2016-09-17 rust-src`
 * Install `arm-none-eabi` gcc suite (for cortex-m4)
   * `$ brew cask install gcc-arm-embedded`
 * Setup the `thumbv7em-none-eabi` target
@@ -39,6 +41,15 @@ $ xargo build
 ```
 
 When xargo builds a libcore for your target (thumbv7em-none-eabi), it may complain that it can't build libc - that seems to be the way xargo/libcore builds right now. It doesn't seem to break the final firmware.
+
+If you get an error along the lines of:
+```
+error: error recursively walking the sysroot
+caused by: IO error for operation on $HOME/.rustup/toolchains/nightly-$ARCH/lib/rustlib/src: No such file or directory (os error 2)
+caused by: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` for a backtrace
+```
+that usually means you need to do the `$ rustup component add --toolchain nightly-2016-09-17 rust-src` step mentioned earlier.
 
 This will eventually generate an ELF binary of your program, which can be loaded onto the 1bitsy with GDB:
 
