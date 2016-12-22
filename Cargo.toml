@@ -8,13 +8,14 @@ git = "https://github.com/hackndev/zinc.git"
 branch = "master"
 features = ["mcu_stm32f4"]
 
+# We need to add this dependency explicitly to use macro_zinc (to get the zinc_main annotation for main())
 [dependencies.macro_zinc]
 git = "https://github.com/hackndev/zinc.git"
 branch = "master"
 
 [profile.dev]
 opt-level = 0
-debug = false
+debug = false # Zinc's ld script doesn't support debug symbols (they go in a discarded section). So we disable generating them to avoid failing a build.
 rpath = false
 lto = false
 debug-assertions = false
@@ -22,4 +23,4 @@ codegen-units = 1
 panic = 'unwind'
 
 [profile.release]
-lto = true
+lto = true # Link Time Optimization really cuts down the size of a build
