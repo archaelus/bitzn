@@ -1,0 +1,25 @@
+[package]
+name = "bitzn"
+version = "0.1.0"
+authors = ["Geoff Cant <nem@erlang.geek.nz>"]
+
+[dependencies.zinc]
+git = "https://github.com/hackndev/zinc.git"
+branch = "master"
+features = ["mcu_stm32f4"]
+
+[dependencies.macro_zinc]
+git = "https://github.com/hackndev/zinc.git"
+branch = "master"
+
+[profile.dev]
+opt-level = 0
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 1
+panic = 'unwind'
+
+[profile.release]
+lto = true

@@ -1,0 +1,44 @@
+[root]
+name = "bitzn"
+version = "0.1.0"
+dependencies = [
+ "macro_zinc 0.1.0 (git+https://github.com/hackndev/zinc.git)",
+ "zinc 0.1.0 (git+https://github.com/hackndev/zinc.git)",
+]
+
+[[package]]
+name = "ioreg"
+version = "0.1.0"
+source = "git+https://github.com/hackndev/zinc.git#64aa605167813f8e360ce6173109acb632dee33b"
+
+[[package]]
+name = "macro_zinc"
+version = "0.1.0"
+source = "git+https://github.com/hackndev/zinc.git#64aa605167813f8e360ce6173109acb632dee33b"
+
+[[package]]
+name = "rlibc"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "volatile_cell"
+version = "1.0.0"
+source = "git+https://github.com/hackndev/zinc.git#64aa605167813f8e360ce6173109acb632dee33b"
+
+[[package]]
+name = "zinc"
+version = "0.1.0"
+source = "git+https://github.com/hackndev/zinc.git#64aa605167813f8e360ce6173109acb632dee33b"
+dependencies = [
+ "ioreg 0.1.0 (git+https://github.com/hackndev/zinc.git)",
+ "rlibc 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "volatile_cell 1.0.0 (git+https://github.com/hackndev/zinc.git)",
+]
+
+[metadata]
+"checksum ioreg 0.1.0 (git+https://github.com/hackndev/zinc.git)" = "<none>"
+"checksum macro_zinc 0.1.0 (git+https://github.com/hackndev/zinc.git)" = "<none>"
+"checksum rlibc 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "fc874b127765f014d792f16763a81245ab80500e2ad921ed4ee9e82481ee08fe"
+"checksum volatile_cell 1.0.0 (git+https://github.com/hackndev/zinc.git)" = "<none>"
+"checksum zinc 0.1.0 (git+https://github.com/hackndev/zinc.git)" = "<none>"
