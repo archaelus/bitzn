@@ -8,6 +8,8 @@ you can create whatever you want.
 
 ![1bitsy running bitzn](doc/1bitsy_blink.gif)
 
+(This gif is poorly edited - it really does blink at 1Hz I swear :)
+
 ## Pre-requisites
 
 ### Hardware
